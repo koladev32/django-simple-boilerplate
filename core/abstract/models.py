@@ -18,3 +18,6 @@ class AbstractModel(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     objects = AbstractManager()
+
+    class Meta:
+        abstract = True
