@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from high.user.models import User
-from abstract.serializers import AbstractSerializer
+from core.user.models import User
+from core.abstract.serializers import AbstractSerializer
 
 
 class UserSerializer(AbstractSerializer):

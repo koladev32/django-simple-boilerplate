@@ -3,6 +3,6 @@ from rest_framework import serializers
 
 class AbstractSerializer(serializers.ModelSerializer):
     
-    public_id = serializers.UUIDField(source='public_id', read_only=True, format='hex')
+    public_id = serializers.UUIDField(read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)

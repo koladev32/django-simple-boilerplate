@@ -1,10 +1,12 @@
 from rest_framework.routers import SimpleRouter
-from user.viewsets import UserViewSet
+from core.user.viewsets import UserViewSet
+from core.auth.viewsets import LoginViewSet
 
 
 routes = SimpleRouter()
 
 routes.register(r'user', UserViewSet, basename='user')
+routes.register(r'login', LoginViewSet, basename='login')
 
 
 urlpatterns = [

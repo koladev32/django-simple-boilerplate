@@ -1,10 +1,10 @@
 from django.db import models
 
-from abstract.models import AbstractModelManager, AbstractModel
+from core.abstract.models import AbstractManager, AbstractModel
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
-class UserManager(AbstractModelManager, BaseUserManager):
+class UserManager(AbstractManager, BaseUserManager):
 
     def create_user(self, username, password=None, **kwargs):
         """Create and return a `User` with an email, phone number, username and password."""
