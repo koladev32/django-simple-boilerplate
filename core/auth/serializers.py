@@ -1,7 +1,10 @@
+from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.settings import api_settings
 from django.contrib.auth.models import update_last_login
+
 from core.user.serializers import UserSerializer
+from core.user.models import User
 
 
 class LoginSerializer(TokenObtainPairSerializer):
@@ -11,12 +14,27 @@ class LoginSerializer(TokenObtainPairSerializer):
 
         refresh = self.get_token(self.user)
 
+        data['user'] = UserSerializer(self.user).data
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
-        data['user'] = UserSerializer(self.user).data
 
         if api_settings.UPDATE_LAST_LOGIN:
             update_last_login(None, self.user)
 
         return data
+
+
+class RegisterSerializer(UserSerializer):
+    password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ['public_id', 'username', 'email', 'password', 'is_active', 'created', 'updated']
+
+    def create(self, validated_data):
+        try:
+            user = User.objects.get(email=validated_data['email'])
+        except User.DoesNotExist:
+            user = User.objects.create_user(**validated_data)
+        return user
 
